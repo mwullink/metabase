@@ -6,11 +6,11 @@ import type { FilterClause, Filter } from "metabase/meta/types/Query";
 
 // returns canonical list of Filters
 export function getFilters(filter: ?FilterClause): Filter[] {
-    if (!filter) {
+    if (!filter || Array.isArray(filter) && filter.length === 0) {
         return [];
     } else if (mbqlEq(op(filter), "and")) {
         return args(filter);
-    } else {
+    } else if (filter.length > 0){
         return [filter];
     }
 }
